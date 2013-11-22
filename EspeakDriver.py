@@ -43,8 +43,8 @@ class EspeakDriver(object):
 	def speak(self, text, volume = None, speed = None):
 		volume = (volume or self.volume)
 		speed = (speed or self.speed)
-		espeak_proc = subprocess.Popen([self.bin_path, '-v', 'en+f3', '-a', str(volume), '-s', str(speed), text,"--stdout"],stdout = subprocess.PIPE, stderr = open("/dev/null","w"))
-		aplay = subprocess.Popen(["/usr/bin/aplay"],stdin = espeak_proc.stdout,stdout = open("/dev/null","w"), stderr = open("/dev/null","w"))
+		espeak_proc = subprocess.Popen([self.bin_path, '-v', 'en+f3', '-a', str(volume), '-s', str(speed), text, "--stdout"], stdout = subprocess.PIPE, stderr = open("/dev/null", "w"))
+		aplay = subprocess.Popen(["/usr/bin/aplay"], stdin = espeak_proc.stdout, stdout = open("/dev/null", "w"), stderr = open("/dev/null", "w"))
 		aplay.wait()
 
 	def say(self, text):

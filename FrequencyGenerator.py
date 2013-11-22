@@ -31,56 +31,12 @@
 #  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 #  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
-#
-import alsaaudio, sys
+
+import alsaaudio
+import sys
 import time
-
-from numpy import arange        # like range, but supports floating point
 from math import pi, sin
-
-class FrequencyGenerator:
-
-   def __init__(self,channels = 2, sample_size = 1, frame_rate = 44100, period_size = 11025 ):
-	self.channels = channels
-	self.sample_size = sample_size
-	self.frame_size = self.channels * self.sample_size	
-	self.frame_rate = frame_rate
-	self.byte_rate = self.frame_rate * self.frame_size # bytes per second
-	self.period_size = period_size  
-
-	self.pcm = alsaaudio.PCM(alsaaudio.PCM_PLAYBACK)
-	self.pcm.setchannels(self.channels)
-	self.pcm.setformat(alsaaudio.PCM_FORMAT_U8)
-	self.pcm.setrate(self.frame_rate)
-	self.pcm.setperiodsize(self.period_size)
-
-   def quantize(self,f):                # map (-1..1) -> [0..256)
-    	return int((f+1)*127)       # depends on PCM format
-
-   def sine_wave(self,freq):
-    	wave = [chr(self.quantize(sin(x))) * self.channels for x
-            in arange(0, 2*pi, 2*pi / (self.frame_rate / freq))]
-    	#wave_data = "".join(wave)
-    	wave_data = "".join(wave) + "".join(wave)
-    	(nwaves, extra_bytes) = divmod(self.period_size * self.frame_size, len(wave_data))
-    	self.pcm.write((wave_data * nwaves) + wave_data[:extra_bytes])
-
-   def play_zelda(self):
-	zelda = [C4,C4,G3,G3,G3,G3,C4,C4,D4,D4l,F,G]
-        for note in zelda:
-                self.sine_wave(note)
-
-   def zelda_secret(self):
-	G = 783.99 
-	Fs = 739.99 
-	Ds = 622.25 
-	Gs = 415.30
-	E = 659.26 
-	HGs = 830.61 
-	HC = 1046.50
-	secret = [G,Fs,Ds,A,Gs,E,HGs,HC]
-	for note in secret:
-		self.sine_wave(note)
+from numpy import arange        # like range, but supports floating point
 
 A = 440
 D = 293.66
@@ -102,10 +58,50 @@ A3 = 220.00
 D4l = 311.13
 song_of_time_notes = [A, A, D, D, D, D, F, F, A, A, D, D, D, D, F, F, A, C, B, B, G, G, F, G, A, A, D, D, C4, E4, D, D, D, D]
 
+class FrequencyGenerator:
+	def __init__(self, channels = 2, sample_size = 1, frame_rate = 44100, period_size = 11025):
+		self.channels = channels
+		self.sample_size = sample_size
+		self.frame_size = self.channels * self.sample_size
+		self.frame_rate = frame_rate
+		self.byte_rate = self.frame_rate * self.frame_size # bytes per second
+		self.period_size = period_size
+
+		self.pcm = alsaaudio.PCM(alsaaudio.PCM_PLAYBACK)
+		self.pcm.setchannels(self.channels)
+		self.pcm.setformat(alsaaudio.PCM_FORMAT_U8)
+		self.pcm.setrate(self.frame_rate)
+		self.pcm.setperiodsize(self.period_size)
+
+	def quantize(self, f):           # map (-1..1) -> [0..256)
+		return int((f+1)*127)       # depends on PCM format
+
+	def sine_wave(self, freq):
+		wave = [chr(self.quantize(sin(x))) * self.channels for x in arange(0, 2*pi, 2*pi / (self.frame_rate/freq))]
+		wave_data = "".join(wave) + "".join(wave)
+		(nwaves, extra_bytes) = divmod(self.period_size * self.frame_size, len(wave_data))
+		self.pcm.write((wave_data * nwaves) + wave_data[:extra_bytes])
+
+	def play_zelda(self):
+		zelda = [C4, C4, G3, G3, G3, G3, C4, C4, D4, D4l, F, G]
+		for note in zelda:
+			self.sine_wave(note)
+
+	def zelda_secret(self):
+		G = 783.99
+		Fs = 739.99
+		Ds = 622.25
+		Gs = 415.30
+		E = 659.26
+		HGs = 830.61
+		HC = 1046.50
+		secret = [G, Fs, Ds, A, Gs, E, HGs, HC]
+		for note in secret:
+			self.sine_wave(note)
+
 def main():
-        t = FrequencyGenerator()
+	t = FrequencyGenerator()
 	t.zelda_secret()
 
 if __name__ == "__main__":
-        main()
-
+	main()

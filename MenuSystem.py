@@ -32,7 +32,6 @@
 #  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-
 import subprocess
 from LCD import *
 from time import sleep
@@ -40,39 +39,38 @@ from Aircrack import *
 from FrequencyGenerator import FrequencyGenerator
 
 class MenuSystem:
-
 	iwconfig_bin = "/sbin/iwconfig"
-	
+
 	def __init__(self):
 		self.lcd = LCD()
 		self.rogue_aps = []
-		
+
 	def wlan_menu(self):
 		wireless_cards = []
 		current_pointer = 0
-		wlan = subprocess.Popen([self.iwconfig_bin],stdout=subprocess.PIPE,stderr=subprocess.PIPE)
-		
+		wlan = subprocess.Popen([self.iwconfig_bin], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+
 		while True:
 			line = wlan.stdout.readline()
 			if not line:
 				break
 			elif "wlan" in line:
 				wireless_cards.append(line.split(" ")[0])
-				
+
 		if wireless_cards > 0:
 			self.lcd.display("Select wlan:\n{0}".format(wireless_cards[current_pointer]))
 			while True:
 				result = self.lcd.get_button_press()
 				if result == "Up":
-						current_pointer -= 1
-						if abs(current_pointer) == len(wireless_cards):
-								current_pointer = 0
-						self.lcd.display("Select wlan:\n{0}".format(wireless_cards[current_pointer]))
+					current_pointer -= 1
+					if abs(current_pointer) == len(wireless_cards):
+							current_pointer = 0
+					self.lcd.display("Select wlan:\n{0}".format(wireless_cards[current_pointer]))
 				elif result == "Down":
-						current_pointer += 1
-						if abs(current_pointer) == len(wireless_cards):
-								current_pointer = 0
-						self.lcd.display("Select wlan:\n{0}".format(wireless_cards[current_pointer]))
+					current_pointer += 1
+					if abs(current_pointer) == len(wireless_cards):
+							current_pointer = 0
+					self.lcd.display("Select wlan:\n{0}".format(wireless_cards[current_pointer]))
 				elif result == "Select":
 					self.lcd.display("Starting\nDetection")
 					self.airmon = Airmon(wireless_cards[current_pointer])
@@ -80,7 +78,7 @@ class MenuSystem:
 					self.airodump_main = Airodump(self.lcd)
 					self.airodump_main.start()
 					break
-					
+
 	def main_menu(self):
 		list = ['View Rogues','Update Whitelist','Backup Files','Clear Rogues','Restart Monitoring']
 		current_pointer = 0
@@ -106,25 +104,25 @@ class MenuSystem:
 			elif result == "Select":
 				if list[current_pointer] == 'Update Whitelist':
 					result = self.airodump_main.update_whitelist()
-					self.lcd.display(result,2)
+					self.lcd.display(result, 2)
 				elif list[current_pointer] == 'Backup Files':
 					result = self.airodump_main.backup_files()
-					self.lcd.display(result,2)
-				elif list[current_pointer] == 'View Rogues': 
+					self.lcd.display(result, 2)
+				elif list[current_pointer] == 'View Rogues':
 					self.networks_menu()
-				elif list[current_pointer] == 'Clear Rogues': 
+				elif list[current_pointer] == 'Clear Rogues':
 					self.airodump_main.clear_rogues()
-					self.lcd.display("Rogues cleared",2)
-				elif list[current_pointer] == 'Restart Monitoring': 
+					self.lcd.display("Rogues cleared", 2)
+				elif list[current_pointer] == 'Restart Monitoring':
 					self.lcd.display("Restarting")
 					self.airmon.restart()
 					self.airodump_main.restart()
-					self.lcd.display("Restarted",2)
-			
+					self.lcd.display("Restarted", 2)
+
 	def networks_menu(self):
 		rogue_aps = self.airodump_main.rogue_aps
 		if len(rogue_aps) < 1:
-			self.lcd.display("No Rogue APs",2)
+			self.lcd.display("No Rogue APs", 2)
 			return
 		current_pointer = 0
 		self.lcd.display("Potential Target\n{0}".format(rogue_aps[current_pointer][0]))
@@ -139,21 +137,21 @@ class MenuSystem:
 			elif result == "Down":
 				current_pointer += 1
 				if abs(current_pointer) == len(rogue_aps):
-					current_pointer = 0	
+					current_pointer = 0
 				self.lcd.display("Potential Target\n{0}".format(rogue_aps[current_pointer][0]))
 			elif result == "Left":
 				break
 			elif result == "Select":
 				self.airodump_main.stop()
-				target_airodump = Airodump(self.lcd,rogue_aps[current_pointer][0],rogue_aps[current_pointer][1],rogue_aps[current_pointer][2])
+				target_airodump = Airodump(self.lcd, rogue_aps[current_pointer][0], rogue_aps[current_pointer][1], rogue_aps[current_pointer][2])
 				target_airodump.locate()
 				self.lcd.display("Potential Target\n{0}".format(rogue_aps[current_pointer][0]))
 				self.airodump_main.start()
-				
+
 def main():
-		menu = MenuSystem()
-		menu.wlan_menu()
-		menu.main_menu()
-	
+	menu = MenuSystem()
+	menu.wlan_menu()
+	menu.main_menu()
+
 if __name__ == "__main__":
-        main()
+	main()
