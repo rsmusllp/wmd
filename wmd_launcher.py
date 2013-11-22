@@ -32,26 +32,26 @@
 #  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-from MenuSystem import MenuSystem
 import glob
 import os
+from MenuSystem import MenuSystem
 
 base_dir = '/home/securestate'
 
 def cleanup():
-        os.chdir(base_dir)
-        for oldfile in glob.glob("*.csv"):
-                os.unlink(oldfile)
-        for oldfile in glob.glob("*.cap"):
-                os.unlink(oldfile)
-        for oldfile in glob.glob("*.netxml"):
-                os.unlink(oldfile)
+	os.chdir(base_dir)
+	for oldfile in glob.glob("*.csv"):
+		os.unlink(oldfile)
+	for oldfile in glob.glob("*.cap"):
+		os.unlink(oldfile)
+	for oldfile in glob.glob("*.netxml"):
+		os.unlink(oldfile)
 
 def main():
-        cleanup()
-        menu = MenuSystem()
-        menu.wlan_menu()
-        menu.main_menu()
+	cleanup()
+	menu = MenuSystem()
+	menu.wlan_menu()
+	menu.main_menu()
 
 if __name__ == "__main__":
-        main()
+	main()

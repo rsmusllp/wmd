@@ -36,34 +36,31 @@ from Adafruit_CharLCDPlate import *
 from time import sleep
 
 class LCD:
-
-	
-           
 	def __init__(self):
 		self.lcd = Adafruit_CharLCDPlate()
 		self.lcd.begin(16, 2)
 		sleep(0.5)
-		self.colors = (('red' , self.lcd.RED) , ('yellow', self.lcd.YELLOW), ('green' , self.lcd.GREEN),
-           ('teal', self.lcd.TEAL), ('blue'  , self.lcd.BLUE)  , ('violet', self.lcd.VIOLET),
-           ('off' , self.lcd.OFF) , ('on'    , self.lcd.ON))
-		self.buttons = ((self.lcd.SELECT, 'Select'),
-			   (self.lcd.LEFT  , 'Left'),
-			   (self.lcd.UP    , 'Up'),
-			   (self.lcd.DOWN  , 'Down'),
-			   (self.lcd.RIGHT , 'Right'))  
+		self.colors =   (('red', self.lcd.RED),  ('yellow', self.lcd.YELLOW), ('green',  self.lcd.GREEN),
+						('teal', self.lcd.TEAL), ('blue',  self.lcd.BLUE),    ('violet', self.lcd.VIOLET),
+						('off',  self.lcd.OFF),  ('on',    self.lcd.ON))
+		self.buttons =  ((self.lcd.SELECT, 'Select'),
+						(self.lcd.LEFT,    'Left'),
+						(self.lcd.UP,      'Up'),
+						(self.lcd.DOWN,    'Down'),
+						(self.lcd.RIGHT,   'Right'))
 		self.lcd.backlight(self.lcd.BLUE)
 		self.color = self.lcd.BLUE
 		self.lcd.clear()
-		
-	def get_color(self,color):
+
+	def get_color(self, color):
 		for color_main in self.colors:
 			if color == color_main[0]:
 				return color_main[1]
-				
-	def set_color(self,color):
+
+	def set_color(self, color):
 		self.lcd.backlight(self.get_color(color.lower()))
-						
-	def display(self,message,duration = 0,color = None):
+
+	def display(self, message, duration = 0, color = None):
 		if color is not None and color != self.color:
 			self.lcd.backlight(self.get_color(color))
 		self.lcd.clear()
@@ -71,7 +68,7 @@ class LCD:
 		if duration != 0:
 			sleep(duration)
 			self.lcd.clear()
-			
+
 	def wipe(self):
 		self.lcd.backlight(self.color)
 		self.lcd.clear()
@@ -80,7 +77,7 @@ class LCD:
 		for color in self.colors:
 			self.lcd.backlight(color[1])
 			sleep(0.1)
-			
+
 	def get_button_press(self, block = True):
 		sleep(0.5)
 		while True:
@@ -89,12 +86,12 @@ class LCD:
 					return button[1]
 			if not block:
 				break
-					
+
 def main():
-		l = LCD()
-		l.color_cycle()
-		l.display("This is some text",3)
-		l.set_color("Green")
-		
+	l = LCD()
+	l.color_cycle()
+	l.display("This is some text",3)
+	l.set_color("Green")
+
 if __name__ == "__main__":
-        main()
+	main()

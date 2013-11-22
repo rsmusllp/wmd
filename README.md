@@ -20,7 +20,7 @@ the following hardware:
 
 - AWUS036H Alfa Card
 - Adafruit RGB Negative 16x2 LCD+Keypad kit
-(http://www.adafruit.com/products/1110) 
+(http://www.adafruit.com/products/1110)
 
 # License
 <pre>
@@ -49,9 +49,6 @@ DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
 THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-This license does not apply to the following components:
- * python-tldextract
 </pre>
 
 # About Authors:
