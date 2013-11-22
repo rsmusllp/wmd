@@ -55,6 +55,8 @@ This license does not apply to the following components:
 </pre>
 
 # About Authors:
+Jake Garlie - jagar
+
 Brandan Geise - coldfusion
 
 Brandon Knight - kaospunk
