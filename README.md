@@ -1,15 +1,15 @@
 <pre>
      _.-^^---....,,--_
  _--                  --_
-<          W M D         >)
+(          W M D          )
 |                         |
  \._                   _./
     ```--. . , ; .--'''
           | |   |
        .-=||  | |=-.
-       `-=#$%&%$#=-'
+       `-=#$%£$#=-'
           | ;  :|
- _____.,-#%&$@%#&#~,._____
+ _____.,-#%£$@%#£#~,._____
 </pre>
 
 # Summary
@@ -18,7 +18,7 @@ for the detection and location of Rogue Access Points. The code in this
 repository is meant to be run on the Kali Linux Raspberry Pi ARM using
 the following hardware:
 
-- AWUS036H Akfa Card
+- AWUS036H Alfa Card
 - Adafruit RGB Negative 16x2 LCD+Keypad kit
 (http://www.adafruit.com/products/1110) 
 
@@ -55,15 +55,19 @@ This license does not apply to the following components:
 </pre>
 
 # About Authors:
-Brandan Geise <bgeise [at] securestate [dot] com>
-Brandon Knight <kaospunk [at] gmail [dot] com>
-Jeff McCutchan <jmccutchan [at] securestate [dot] com>
-Spencer McIntyre <zeroSteiner [at] gmail [dot] com>
-Ken Smith <smithkec1 [at] gmail [dot] com>
+Brandan Geise - coldfusion
+
+Brandon Knight - kaospunk
+
+Jeff McCutchan - jamcut
+
+Spencer McIntyre - zeroSteiner
+
+Ken Smith - p4tchw0rk
 
 Home Page: [http://www.securestate.com/](http://www.securestate.com/)
 
-Project Home Page: [https://github.com/securestate/kraken](https://github.com/securestate/wmd)
+Project Home Page: [WMD](https://github.com/securestate/wmd)
 
 # Install
-For install information please see the INSTALL file.
+For install information please see the INSTALL file...coming soon.
